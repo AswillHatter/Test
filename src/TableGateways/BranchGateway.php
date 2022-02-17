@@ -1,16 +1,24 @@
 <?php
+
 namespace Src\TableGateways;
 
-class BranchGateway {
+class BranchGateway
+{
 
     private $db = null;
 
+    /**
+     * @param $db
+     */
     public function __construct($db)
     {
         $this->db = $db;
     }
 
-    public function findAll()
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
         $statement = "
             SELECT 
@@ -28,19 +36,24 @@ class BranchGateway {
         }
     }
 
-    public function find($id)
+    /**
+     * @param $id
+     * @return array
+     */
+    public function find($id): array
     {
         $statement = "
             SELECT 
                 id, name, parent_id
             FROM
                 branch
-            WHERE id = ?;
+            WHERE id = :id;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array($id));
+            $statement->execute(array(
+                'id' => (int)$id));
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
@@ -48,7 +61,11 @@ class BranchGateway {
         }
     }
 
-    public function insert(Array $input)
+    /**
+     * @param array $input
+     * @return void
+     */
+    public function insert(array $input)
     {
         $statement = "
             INSERT INTO branch 
@@ -58,19 +75,22 @@ class BranchGateway {
         ";
 
         try {
-
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
                 'name' => $input['name'],
                 'parent_id' => $input['parent_id'],
             ));
-            return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
     }
 
-    public function update($id, Array $input)
+    /**
+     * @param $id
+     * @param array $input
+     * @return void
+     */
+    public function update($id, array $input)
     {
         $statement = "
             UPDATE branch
@@ -82,17 +102,21 @@ class BranchGateway {
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array(
-                'id' => (int) $id,
-                'name' => $input['name'],
-                'parent_id' => $input['parent_id'],
-            ));
-            return $statement->rowCount();
+            $statement->execute(
+                array(
+                    'id' => (int)$id,
+                    'name' => $input['name'],
+                    'parent_id' => $input['parent_id'],
+                ));
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
     }
 
+    /**
+     * @param $id
+     * @return void
+     */
     public function delete($id)
     {
         $statement = "
@@ -101,9 +125,9 @@ class BranchGateway {
         ";
 
         try {
+            $newarray = array('id' => (int)$id);
             $statement = $this->db->prepare($statement);
-            $statement->execute(array('id' => $id));
-            return $statement->rowCount();
+            $statement->execute($newarray);
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }

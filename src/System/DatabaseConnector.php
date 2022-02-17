@@ -1,7 +1,9 @@
 <?php
+
 namespace Src\System;
 
-class DatabaseConnector {
+class DatabaseConnector
+{
 
     private $dbConnection = null;
 
@@ -9,7 +11,7 @@ class DatabaseConnector {
     {
         $host = getenv('DB_HOST');
         $port = getenv('DB_PORT');
-        $db   = getenv('DB_DATABASE');
+        $db = getenv('DB_DATABASE');
         $user = getenv('DB_USERNAME');
         $pass = getenv('DB_PASSWORD');
 
@@ -24,6 +26,9 @@ class DatabaseConnector {
         }
     }
 
+    /**
+     * @return \PDO|null
+     */
     public function getConnection()
     {
         return $this->dbConnection;
