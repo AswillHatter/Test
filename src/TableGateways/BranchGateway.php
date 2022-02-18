@@ -122,6 +122,8 @@ class BranchGateway
         $statement = "
             DELETE FROM branch
             WHERE id = :id;
+            DELETE FROM branch
+            WHERE parent_id = :id;
         ";
 
         try {

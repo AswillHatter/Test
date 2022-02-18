@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=\"UTF-8\">
+    <title>Tree on php</title>
+    <script src='functions.js' type=\"text/javascript\"></script>
+    <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+<div>
+    <script>
+
+        function reqwest(){
+            // 1. Создаём новый объект XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // 2. Конфигурируем его: GET-запрос на URL 'phones.json'
+            xhr.open('GET', 'http://test.site/Test/branch/', true);
+            console.log("xhr created");
+            // 3. Отсылаем запрос
+            xhr.send();
+            Rez = xhr.status + ': ' + xhr.statusText;
+            return Rez;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            /*
+            // 4. Если код ответа сервера не 200, то это ошибка
+            if (xhr.status != 200) {
+                // обработать ошибку
+                alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+            } else {
+                // вывести результат
+                console.log( xhr.responseText ); // responseText -- текст ответа.
+            }
+             */
+            var rez = reqwest();
+            console.log("rez = ", rez);
+            //alert("DOM готов!");
+        });
+    </script>
+</div>
+
+</body>
+<footer>
+
+</footer>
+
+</html>
+
+
+
+
+
+
